@@ -1,10 +1,10 @@
 """
-@Time         ：2020-7-15
+@Time       ：2020-7-15
 @Author     ：Honeypot
 @GitHub     : Alice-py
 @e-mail     ：1104389956@qq.com
 @version    : 1.0   正常实现录制功能，工作问题存在的问题后续有时间会修复
-@ USE        :  现版本直接启用，命名规则是时间，使用_隔开，avi格式的视频，停止需要点击图片窗口按“ESC”键
+@ USE       :  现版本直接启用，命名规则是时间，使用_隔开，avi格式的视频，停止需要点击图片窗口按“ESC”键
 """
 import numpy as np
 import cv2
