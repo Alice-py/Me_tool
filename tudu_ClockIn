@@ -1,0 +1,91 @@
+# coding=gbk
+"""
+	开发时间：2020-10-1
+	作者：Honeypot
+	邮箱：1104389956@qq.com
+	版本：1.0
+"""
+
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time, json
+import os
+import pickle
+import time, datetime
+
+
+class TUDOQD:
+	def __init__(self):
+		self.name = "linhaopeng@oray"
+		self.passwd = ""
+		self.old_url = r"https://oray.tudu.com/"	# v1接口登陆
+
+	def login(self):
+		Chrome_options = Options()
+		Chrome_options.add_argument('--headless')
+		driver = webdriver.Chrome(chrome_options = Chrome_options)
+		driver.get(self.old_url)
+		time.sleep(1.2)
+		print(">>> 初始化中")
+		driver.find_element_by_xpath("//div[@class='input-text-wrap']//input").send_keys("linhaopeng")	# 账号
+		print(">>> 正在登陆")
+		try:
+			driver.find_element_by_xpath("//input[@id='password']").send_keys("OR701314258")	# 密码
+			driver.find_element_by_xpath("//button[@class='btn'][1]").click()
+			print(">>> 登陆成功")
+		except:
+			print(">>>> 登陆失败，请检查网络状态与账号与密码，请联系：1104389956@qq.com")
+		return driver
+
+	def dk(self):
+		""" 时间判断 """ 
+		# 上班签到范围
+		start_time1 = datetime.datetime.strptime(str(datetime.datetime.now().date())+'7:00', '%Y-%m-%d%H:%M')
+		start_time2 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'9:00', '%Y-%m-%d%H:%M')
+		# 下班签到范围
+		over_time1 = datetime.datetime.strptime(str(datetime.datetime.now().date())+'18:00', '%Y-%m-%d%H:%M')
+		over_time2 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'21:00', '%Y-%m-%d%H:%M')
+		# 当前时间
+		now_time = datetime.datetime.now()
+		# 判断当前时间是否在范围时间内
+		if now_time > start_time1 and now_time < start_time2:	# 上班前
+			
+			print(">>> 上班前：", now_time)
+			driver = self.login()
+			time.sleep(1.2)
+			driver.switch_to_frame('mainframe')	# 识别frame
+			time.sleep(1.2)
+			driver.find_element_by_xpath('//*[@id="widget-panel"]/div/div[2]/table/tbody/tr[1]/td[4]/div[1]/input').click()
+			print(">>> 签到成功")
+			return driver
+			
+
+		elif now_time > over_time1 and now_time < over_time2:	# 下班后
+			print(">>> 已下班：", now_time, "正在登陆")
+			driver = self.login()
+			time.sleep(1.2)
+			driver.switch_to_frame('mainframe')	# 识别frame
+			time.sleep(1.2)
+			driver.find_element_by_xpath('//*[@id="widget-panel"]/div/div[2]/table/tbody/tr[1]/td[4]/div[2]/input').click()
+			print(">>> 签退成功")
+			return driver
+
+		else:
+			print(">>> 还未到下班时间哦，需要请自行手动打卡！")	
+
+	def main(self):
+		driver = self.dk()
+		try:
+			# 关闭浏览器
+			driver.close()
+			driver.quit()
+			print("已成功结束进程")
+		except:
+			pass
+
+
+
+
+if __name__ == "__main__":
+	TUDOQD().main()
