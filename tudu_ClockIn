@@ -17,8 +17,8 @@ import time, datetime
 
 class TUDOQD:
 	def __init__(self):
-		self.name = "linhaopeng@oray"
-		self.passwd = ""
+		self.name = "你的账号"    # 不需要带@oray
+		self.passwd = "你的密码"
 		self.old_url = r"https://oray.tudu.com/"	# v1接口登陆
 
 	def login(self):
@@ -28,10 +28,10 @@ class TUDOQD:
 		driver.get(self.old_url)
 		time.sleep(1.2)
 		print(">>> 初始化中")
-		driver.find_element_by_xpath("//div[@class='input-text-wrap']//input").send_keys("linhaopeng")	# 账号
+		driver.find_element_by_xpath("//div[@class='input-text-wrap']//input").send_keys(self.name)	# 账号
 		print(">>> 正在登陆")
 		try:
-			driver.find_element_by_xpath("//input[@id='password']").send_keys("OR701314258")	# 密码
+			driver.find_element_by_xpath("//input[@id='password']").send_keys(self.passwd)	# 密码
 			driver.find_element_by_xpath("//button[@class='btn'][1]").click()
 			print(">>> 登陆成功")
 		except:
