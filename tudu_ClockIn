@@ -20,7 +20,7 @@ class TUDOQD:
 	def __init__(self):
 		self.name = "你的账号"    # 不需要带@oray
 		self.passwd = "你的密码"
-		self.old_url = r"https://oray.tudu.com/"	# v1接口登陆
+		self.old_url = r"https://www.tudu.com/login/"	# v1接口登陆
 
 	def login(self):
 		Chrome_options = Options()
@@ -33,10 +33,10 @@ class TUDOQD:
 		print(">>> 正在登陆")
 		try:
 			driver.find_element_by_xpath("//input[@id='password']").send_keys(self.passwd)	# 密码
-			driver.find_element_by_xpath("//button[@class='btn'][1]").click()
+			driver.find_element_by_xpath("//*[@id="loginform"]/table/tbody/tr[7]/td/button/span/span/span").click()  # 登录按钮
 			print(">>> 登陆成功")
 		except:
-			print(">>>> 登陆失败，请检查网络状态与账号与密码，请联系：1104389956@qq.com")
+			print(">>> 登陆失败，请检查网络状态与账号与密码，请联系：1104389956@qq.com <<<")
 		return driver
 
 	def dk(self):
